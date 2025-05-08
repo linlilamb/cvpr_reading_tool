@@ -4,6 +4,10 @@ from pdb import set_trace
 import search_youtube
 from fpdf import FPDF
 
+def sanitize_text(text):
+    # Remove characters not supported by 'latin-1'
+    return text.encode('latin-1', 'ignore').decode('latin-1')
+
 
 # URL of the CVPR Accepted Papers page
 url = "https://cvpr.thecvf.com/Conferences/2025/AcceptedPapers"
@@ -73,12 +77,17 @@ pdf.cell(200, 10, txt="Highlighted Papers and YouTube Results", ln=True, align='
 pdf.ln(10)
 
 # Add each paper and its YouTube result to the PDF
-pdf.set_font("Arial", size=12)
+
 for paper, arxiv, result in zip(highlighted_papers, highlighted_papers_arxiv,results):
-    pdf.multi_cell(0, 10, txt=f"Paper: {paper}")
-    pdf.multi_cell(0, 10, txt=f"Paper link: {arxiv}")
-    pdf.multi_cell(0, 10, txt=f"YouTube Result: {result}")
-    pdf.ln(5)
+    pdf.set_font("Arial", style='B', size=14)
+    pdf.multi_cell(0, 10, txt=sanitize_text(f"Paper: {paper}"))
+    pdf.set_font("Arial",style='U', size=12)
+    pdf.multi_cell(0, 10, txt=sanitize_text(f"Paper link: {arxiv}"))
+    pdf.ln(3)
+    pdf.set_font("Arial",  size=12)
+    pdf.multi_cell(0, 10, txt=f"YouTube Result: ")
+    pdf.multi_cell(0, 10, txt=sanitize_text(f"{result} "))
+    pdf.ln(10)
 
 # Save the PDF to a file
 output_path = r"C:/Users/Lin/OneDrive/Documents/CVPR_reading_tool/highlighted_papers_results.pdf"

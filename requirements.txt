@@ -1,0 +1,6 @@
+beautifulsoup4==4.12.2
+fpdf==1.7.2
+openai==0.27.8
+requests==2.31.0
+youtube-search-python==1.6.6
+youtube-transcript-api==0.4.5

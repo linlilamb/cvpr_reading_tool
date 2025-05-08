@@ -7,7 +7,7 @@ from openai import OpenAI
 import re
 from pdb import set_trace
 
-client = OpenAI(api_key = 'your_openai_api_key')
+client = OpenAI(api_key = 'You API Key')
 
 
 def extract_video_id(url):
